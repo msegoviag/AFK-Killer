@@ -24,7 +24,6 @@ void fondoPred() {
 }
 
 void showWindows() {
-
 	SendMessage(lHwnd, WM_COMMAND, MIN_ALL_UNDO, 0);
 }
 
@@ -32,22 +31,20 @@ void mouseSwapPred() {
 	SwapMouseButton(FALSE);
 }
 
-void cursorPred()
-{
+void cursorPred() {
 	SystemParametersInfo(SPI_SETCURSORS, 0, NULL, 0);
 }
 
 void showTaskBarPred() {
-
 	ShowWindow(lHwnd, SW_SHOW);
 }
 
 void showIconsPred() {
-
-	// Mostrar iconos escritorio.
+	// Mostrar iconos escritorio
 	ShowWindow(hDesktopWnd, SW_SHOW);
 }
 
+// Si el usuario cierra la aplicación su escritorio vuelve a la normalidad.
 void antidoto() {
 	MessageBoxA(NULL, "Espero que te vayas concienciado, soy un hacker white hat y te dejo el PC como estaba. Podria haber sido peor... ;)", "Info", MB_ICONINFORMATION | MB_OK);
 	cursorPred();
@@ -57,20 +54,15 @@ void antidoto() {
 	showWindows();
 	showIconsPred();
 	exit(0);
-
 }
 
 void playAlarm() {
-
 	std::wstring soundFile = exeFolder + L"\\Content\\alarma.wav";
 	PlaySound(soundFile.c_str(), NULL, SND_ASYNC | SND_FILENAME);
-
 }
 
 void hideWindows() {
-
 	//Minimiza las ventanas que estén abiertas
-
 	SendMessage(lHwnd, WM_COMMAND, MIN_ALL, 0);
 }
 
@@ -78,21 +70,17 @@ void hideIcons() {
 
 	// Oculta iconos escritorio
 	ShowWindow(hDesktopWnd, SW_HIDE);
-
 }
 
 void showMessageBox() {
-
 	MessageBox(NULL, L"HACKED! Te dejaste el PC abierto te fuiste y... PWNED!", L"ERROR", MB_ICONERROR | MB_OK | MB_SYSTEMMODAL);
 	antidoto();
-
 }
 
 // Método de la API de Windows que detecta cuando la ventana del programa se cierra.
 BOOL WINAPI ConsoleHandler(DWORD signal) {
 	if (signal == CTRL_CLOSE_EVENT)
 	{
-		// Si el usuario cierra la aplicación su escritorio vuelve a la normalidad.
 		antidoto();
 	}
 	return TRUE;
@@ -106,7 +94,6 @@ void hideTaskBar()
 
 void changeCursor()
 {
-
 	wstring cursorFile = exeFolder + L"\\Content\\cursor.cur";
 
 	char buffer[MAX_PATH];
@@ -138,30 +125,17 @@ void swapCursor()
 
 int main()
 {
-
 	GetModuleFileName(NULL, exePath, MAX_PATH);
 	exeFolder = exePath;
 	exeFolder = exeFolder.substr(0, exeFolder.find_last_of(L"\\/"));
+	
+	// Payloads Starting...
 
-	// Play Alarm
 	playAlarm();
-
-	// Hide Desktop
 	hideWindows();
-
-	// Hide Task Bar
-
 	hideTaskBar();
-
-	// Cursor Payload
-
 	changeCursor();
-
-	// Swap mouse buttons
-
 	swapCursor();
-
-	// Wallpaper payload
 
 	//You can add as many as you want or make a .*
 	vector<wstring> wallpapers = { exeFolder + L"\\Content\\wallpaper.jpg", exeFolder + L"\\Content\\hacked.jpg", exeFolder + L"\\Content\\hacked2.jpg", exeFolder + L"\\Content\\hacked3.jpg" };
@@ -169,7 +143,6 @@ int main()
 
 	std::thread messageThread(showMessageBox);
 	messageThread.detach();
-
 
 	while (true)
 	{
@@ -190,5 +163,4 @@ int main()
 	}
 
 	return 0;
-
 }
